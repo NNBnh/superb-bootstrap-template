@@ -12,10 +12,9 @@
 
 
 # Imports
-WD="$PWD"
 DOTFILES_PATH=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
-. "$DOTFILES_PATH/extra/superb_bootstrap/ssb" # You can change SSB packages manager path here
+. "$DOTFILES_PATH/extra/sbb/sbb" # You can change SSB packages manager path here
 
 
 # Values
@@ -26,31 +25,29 @@ STEPS="${*:-install before home root after}" # Default order of steps
 
 # Functions
 install_packages() {
-	printf '\n\033[1;7;34m%s\033[0m\n' 'Install packages'
+	printf '\n\033[1;7;34m%s\033[0m\n' 'Install packages' >&2
 
-	ssb_install_packages "$DOTFILES_PATH/packageslist" # You can change packageslist's path here
+	sbb_install_packages "$DOTFILES_PATH/packageslist" # You can change packageslist's path here
 }
 
 symlink_home() {
-	printf '\n\033[1;7;36m%s\033[0m\n' "Symlink to home ($HOME)"
+	printf '\n\033[1;7;36m%s\033[0m\n' "Symlink to home ($HOME)" >&2
 
-	$BSYMLINK_PATH "$DOTFILES_PATH/home" "$HOME"
-
+	"$BSYMLINK_PATH" "$DOTFILES_PATH/home" "$HOME"
 	# Use this instead if you want to batch symlink with stow (you must cd to the directory that contain this setup file)
 	#stow -vt ~ home
 }
 
 symlink_root() {
-	printf '\n\033[1;7;36m%s\033[0m\n' 'Symlink to root (/)'
+	printf '\n\033[1;7;36m%s\033[0m\n' 'Symlink to root (/)' >&2
 
-	$PERMISSION_COMMAND $BSYMLINK_PATH "$DOTFILES_PATH/root" '/'
-
+	$PERMISSION_COMMAND "$BSYMLINK_PATH" "$DOTFILES_PATH/root" '/'
 	# Use this instead if you want to batch symlink with stow (you must cd to the directory that contain this setup file)
 	#$PERMISSION_COMMAND stow -vt / root
 }
 
 before_symlink() {
-	printf '\n\033[1;7;33m%s\033[0m\n' 'Setup before symlink'
+	printf '\n\033[1;7;33m%s\033[0m\n' 'Setup before symlink' >&2
 
 	# Remove files that may conflict when symlink dotfiles
 	#rm .bashrc
@@ -69,7 +66,7 @@ before_symlink() {
 }
 
 after_symlink() {
-	printf '\n\033[1;7;33m%s\033[0m\n' 'Setup after symlink'
+	printf '\n\033[1;7;33m%s\033[0m\n' 'Setup after symlink' >&2
 
 	# Change default shell
 	#chsh -s "$(command -v bash)"
@@ -88,7 +85,7 @@ for step_check in $STEPS; do
 		'r'|'root')    steps_list="${steps_list:+$steps_list; }symlink_root"     ;;
 		'a'|'after')   steps_list="${steps_list:+$steps_list; }after_symlink"    ;;
 		*)
-			printf '\n\033[1;7;31m%s\033[0m\n' "Step '$step_check' not found"
+			printf '\n\033[1;7;31m%s\033[0m\n' "Step '$step_check' not found" >&2
 			exit 1
 		;;
 	esac
