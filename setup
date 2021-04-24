@@ -27,6 +27,32 @@ STEPS="${*:-install before home root after}" # Default order of steps
 install_packages() {
 	printf '\n\033[1;7;34m%s\033[0m\n' 'Install packages' >&2
 
+	# You can add additional package manager
+	# Example: to add "SomePackageManager"
+	#SomePackageManager_MARK='SPM'
+	#SomePackageManager_PM='somepm'
+	#SomePackageManager_COMMAND="$PERMISSION_COMMAND $SomePackageManager_PM install --assume-yes"
+	#
+	# Creating a setup function for "SomePackageManager"
+	#sbb_setup_SomePackageManager() {
+	#	$PERMISSION_COMMAND somepm update  --assume-yes
+	#	$PERMISSION_COMMAND somepm upgrade --assume-yes
+	#}
+	#
+	# Then add "SomePackageManager" to the package managers list only when bootstrapping on Linux
+	#[ "$KERNEL" = 'linux' ] && PACKAGEMANAGER_LIST="$PACKAGEMANAGER_LIST SomePackageManager"
+
+	# You can also change some aspect of an existence package manager
+	# Example: using pipx to manage pip packages
+	#PIP_PM='pipx'
+	#sbb_setup_PIP() {
+	#	sbb_install_python
+	#
+	#	python -m ensurepip --upgrade
+	#	python -m pip install --user pipx
+	#	python -m pipx ensurepath
+	#}
+
 	sbb_install_packages "$DOTFILES_PATH/packageslist" # You can change packageslist's path here
 }
 
