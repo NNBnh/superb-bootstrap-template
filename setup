@@ -14,6 +14,10 @@
 # Imports
 DOTFILES_PATH=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 
+cd "$DOTFILES_PATH" || exit 1
+git submodule update --init --recursive --remote --merge 2>&-
+cd "$WD" || exit 1
+
 . "$DOTFILES_PATH/extra/sbb/sbb" # You can change SSB packages manager path here
 
 
@@ -44,13 +48,15 @@ install_packages() {
 
 	# You can also change some aspect of an existence package manager
 	# Example: using pipx to manage pip packages
-	#PIP_PM='pipx'
+	#PIP_PM='sbb_pipx'
+	#PIP_COMMAND="$PIP_PM"
 	#sbb_setup_PIP() {
 	#	sbb_install_python
 	#
-	#	python -m ensurepip --upgrade
 	#	python -m pip install --user pipx
 	#	python -m pipx ensurepath
+	#
+	#	sbb_make_install_command 'pipx' "pipx install"
 	#}
 
 	sbb_install_packages "$DOTFILES_PATH/packageslist" # You can change packageslist's path here
