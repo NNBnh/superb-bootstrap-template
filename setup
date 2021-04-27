@@ -24,6 +24,8 @@ cd "$WD" || exit 1
 # Values
 BSYMLINK_PATH="$DOTFILES_PATH/extra/bsymlink/bin/bsymlink" # If you use Bsymlink, you can change Bsymlink path here
 
+# source "$DOTFILES_PATH/home/.bashrc" # You can import values or functions from other file
+
 STEPS="${*:-install before home root after}" # Default order of steps
 
 
