@@ -25,6 +25,7 @@
 #     HBR:homebrew-package-name
 #     MCP:macports-package-name
 #     MAS:mas-package-name
+#     NIX:nix-package-name
 #     SBO:sbo-package-name
 #     SNA:snap-package-name
 #     BSR:basher-package-name
@@ -43,7 +44,7 @@
 #   CORRECT:
 #     MAK:package-name
 #
-# EXAMPLE: to see what a good packages list look like, see NNB's file: https://github.com/NNBnh/dots/blob/master/packageslist
+# EXAMPLE: to see what a good packages list look like, see NNB's file: https://github.com/NNBnh/dots/blob/03e7ca9979ae868e0b5a17c17551322d3b7600ea/packageslist
 
 
 ### Label (use "#" to comments)
